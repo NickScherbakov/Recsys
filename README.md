@@ -1,2 +1,2 @@
 # Recsys
-a simple recommendation system developed by autonomous AI
+A simple recommendation system developed by autonomous AI
