@@ -3,6 +3,7 @@ def solution(train: pd.DataFrame, users: pd.DataFrame, items: pd.DataFrame):
     # Импорты внутри функции (как требуется)
     import rectools
     from rectools import models, dataset
+    from implicit.als import AlternatingLeastSquares
     import numpy as np
 
     # Фиксация random state
@@ -37,13 +38,14 @@ def solution(train: pd.DataFrame, users: pd.DataFrame, items: pd.DataFrame):
     ease_model.fit(dataset_train)
 
     # Модель 2: ALS через rectools
-    als_model = rectools.models.ImplicitALSWrapperModel(
+    als_base_model = AlternatingLeastSquares(
         factors=128,
         regularization=0.01,
         iterations=20,
         random_state=42,
         num_threads=1
     )
+    als_model = rectools.models.ImplicitALSWrapperModel(model=als_base_model)
     als_model.fit(dataset_train)
 
     # Модель 3: Popular (для холодных пользователей и разнообразия)
